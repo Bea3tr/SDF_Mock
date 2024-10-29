@@ -1,0 +1,2 @@
+Product{id: 6, product name: iPhone 16 Pro, product description: iPhone, product category: Mobile, price: $2000.00, date: Tue Oct 29 11:49:53 GMT+08:00 2024}
+Product{id: 7, product name: iPhone 14 Pro, product description: iPhone, product category: Mobile, price: $1800.00, date: Tue Oct 29 11:49:53 GMT+08:00 2024}

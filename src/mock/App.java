@@ -2,6 +2,7 @@ package mock;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 public class App {
     public static void main(String[] args) {
@@ -19,7 +20,45 @@ public class App {
         List<Product> filtered = products.stream()
                                         .filter(p -> p.getPrice() > 1500)
                                         .collect(Collectors.toList());
-        filtered.forEach(System.out::println);
+
+        // Accept an argument input that specify a directory and file
+        String filePath = "";
+        String directory = "";
+        if(args.length <= 0) {
+            System.out.println("Missing directory & file arguments");
+            System.exit(1);
+        } else if (args.length > 1) {
+            // if directory & file names are separated
+            directory = args[0];
+            filePath = String.join("/", directory, args[1]);
+        } else {
+            // if path from src is given
+            String[] input = args[0].split("/");
+            directory = input[0];
+            filePath = args[0];
+        }
+
+        try {
+            File dir = new File(directory);
+            if(!dir.exists())
+                dir.mkdir();
+            Writer write = new FileWriter(new File(filePath));
+            BufferedWriter bw = new BufferedWriter(write);
+            filtered.forEach(fp -> {try { 
+                                        bw.write(fp.toString() + "\n");
+                                        System.out.println(fp);
+                                    } catch (IOException ex){
+                                        ex.printStackTrace();
+                                    }});
+            bw.flush();
+            bw.close();
+            write.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+
     }
     
 }
