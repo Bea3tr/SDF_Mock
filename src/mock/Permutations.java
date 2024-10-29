@@ -32,7 +32,6 @@ public class Permutations {
         System.out.println("Number of permutations: " + numPerm);
         perm.forEach(System.out::println);
 
-
     }
 }
     
