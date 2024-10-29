@@ -1,4 +1,4 @@
-package mock;
+package randnum;
 
 import java.io.Console;
 import java.security.SecureRandom;
@@ -6,7 +6,7 @@ import java.util.Random;;
 
 public class MasterMind {
 
-    public static int generateDigits() {
+    public int generateDigits() {
         Random rand = new SecureRandom();
 
         String output = "";
@@ -17,7 +17,7 @@ public class MasterMind {
         return Integer.parseInt(output);
     }
 
-    public static void playGame() {
+    public void playGame() {
         Console cons = System.console();
         int tries = 12;
         boolean isWon = false;
@@ -64,9 +64,5 @@ public class MasterMind {
         String input = cons.readLine("Would you like to play again? (y/n): ");
         if (input.equals("y"))
             playGame();
-    }
-
-    public static void main(String[] args) {
-        playGame();
     }
 }
