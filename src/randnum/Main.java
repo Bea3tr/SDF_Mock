@@ -5,8 +5,15 @@ public class Main {
         // MasterMind mm = new MasterMind();
         // mm.playGame();
 
-        NumGen ng = new NumGen();
+        // NumGen ng = new NumGen();
         // ng.task9();
-        ng.task10();
+        // ng.task10();
+
+        // Task 13
+        String file = "";
+        if(args.length > 0) 
+            file = args[0];
+        HangMan hm = new HangMan();
+        hm.hangman(file);
     }
 }

@@ -1,0 +1,11 @@
+statesman
+general
+after
+death
+later
+emperor
+friend
+member
+leader
+conspiracy
+instigator
