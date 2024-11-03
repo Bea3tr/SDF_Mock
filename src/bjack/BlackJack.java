@@ -29,25 +29,36 @@ public class BlackJack implements Runnable {
             // Create deck for playing
             CardDeck cd = new CardDeck();
             List<Card> deck = cd.getDeck();
+            cd.createDeckEnum(deck);
 
             // Get client input for # of players, to distribute cards
-            int numPlayers = Integer.parseInt(dis.readUTF());
-            List<List<Card>> players = cd.distributeCards(deck, banker, numPlayers);
+            String details = dis.readUTF();
+            System.out.println("Reading player details...");
+            List<Player> players = cd.declarePlayers(details);
+            cd.distributeCards(players, banker, deck);
+            System.out.println("Distributed cards");
 
             // Check banker cards
             banker.forEach(System.out::println);
             if (cd.isBlackJack(banker)) {
+                for(Player player : players) {
+                    if(!cd.isBlackJack(player.getCards())) {
+                        // Deduct 2x bet amount from balance
+                        player.setBalance(player.getBalance()-player.getBet()*2);
+                    }
+                }
                 dos.writeUTF("BlackJack! Banker wins, round over");
                 dos.flush();
 
             } else {
                 // Let players see card one at a time
-                for (List<Card> player : players) {
-                    if (cd.isBlackJack(player)) {
-                        dos.writeUTF("Player " + players.indexOf(player) + 1 + " has BlackJack");
+                for (Player player : players) {
+                    if (cd.isBlackJack(player.getCards())) {
+                        player.setBalance(player.getBalance()+player.getBet()*2);
+                        dos.writeUTF("Player " + player.getName() + " has BlackJack");
                         dos.flush();
                     } else {
-                        dos.writeUTF(cd.showCard(players, player));
+                        dos.writeUTF(cd.showCard(player));
                         dos.flush();
                     }
                     String fromClient = "";
@@ -58,8 +69,8 @@ public class BlackJack implements Runnable {
                             break;
                         switch (fromClient) {
                             case "draw":
-                                cd.draw(deck, player);
-                                dos.writeUTF(cd.showCard(players, player));
+                                cd.draw(deck, player.getCards());
+                                dos.writeUTF(cd.showCard(player));
                                 dos.flush();
                                 break;
 
@@ -88,8 +99,8 @@ public class BlackJack implements Runnable {
                             if (terms[1].equals("all")) {
                                 cd.openAll(players, banker);
                             } else {
-                                int idx = Integer.parseInt(terms[1]);
-                                cd.openCard(players, banker, idx);
+                                String name = terms[1];
+                                cd.openCard(players, banker, name);
                             }
                             break;
 

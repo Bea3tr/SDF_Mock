@@ -26,11 +26,11 @@ public class Card {
     public NUM getN() {return n;}
 
     @Override
-    public String toString() {
-        return "Card{%s of %s}".formatted(number, suit);
-    }
+    // public String toString() {
+    //     return "Card{%s of %s}".formatted(number, suit);
+    // }
 
-    public String toStringEnum() {
-        return "Card{%s of %s}".formatted(n, s);
+    public String toString() {
+        return "Card{%s of %s}".formatted(n.getName(), s.getName());
     }
 }
